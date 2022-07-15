@@ -12,16 +12,32 @@ set autoindent              " indent a new line
 set number                  " add line numbers
 set wildmode=longest,list   " get bash-like tab completions
 set cc=80                   " set an 80 column border for good coding style
-filetype plugin indent on   " allow auto-indenting depending on file type
-syntax on                   " syntax highlighting
 set mouse=a                 " enable mouse click
 set clipboard=unnamedplus   " using system clipboard
-filetype plugin on
 set cursorline              " highlight current cursorline
 set ttyfast                 " Speed up scrolling in Vim
 set spell                   " enable spell check
-set noswapfile              " disable creating swap file
 set backupdir=~/.cache/vim  " Directory to store backup files.
+set fileformats=unix,dos,mac
+syntax on                   " syntax highlighting
+filetype plugin on
+filetype plugin indent on   " allow auto-indenting depending on file type
+" set noswapfile              " disable creating swap file
+
+
+:tnoremap <M-h> <C-\><C-N><C-w>h
+:tnoremap <M-j> <C-\><C-N><C-w>j
+:tnoremap <M-k> <C-\><C-N><C-w>k
+:tnoremap <M-l> <C-\><C-N><C-w>l
+:inoremap <M-h> <C-\><C-N><C-w>h
+:inoremap <M-j> <C-\><C-N><C-w>j
+:inoremap <M-k> <C-\><C-N><C-w>k
+:inoremap <M-l> <C-\><C-N><C-w>l
+:nnoremap <M-h> <C-w>h
+:nnoremap <M-j> <C-w>j
+:nnoremap <M-k> <C-w>k
+:nnoremap <M-l> <C-w>l
+
 
 call plug#begin()
     Plug 'sainnhe/sonokai'
@@ -40,23 +56,11 @@ call plug#end()
 colorscheme sonokai
 
 " NERD Tree configuration
-nnoremap <leader>n :NERDTreeFocus<CR>
-nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-n> :NERDTreeFocus<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
-nnoremap <C-f> :NERDTreeFind<CR>
-let NERDTreeShowHidden=1
-let g:NERDTreeGitStatusIndicatorMapCustom = {
-                \ 'Modified'  :'~',
-                \ 'Staged'    :'+',
-                \ 'Untracked' :'!',
-                \ 'Renamed'   :'R',
-                \ 'Unmerged'  :'=',
-                \ 'Deleted'   :'-',
-                \ 'Dirty'     :'D',
-                \ 'Ignored'   :'.',
-                \ 'Clean'     :'OK',
-                \ 'Unknown'   :'?',
-                \ }
+
+let g:NERDTreeShowHidden=1
+let g:NERDTreeWinSize=35
 
 function! IsNERDTreeOpen()
   return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
@@ -78,18 +82,12 @@ if argc() != 0
 endif
 
 
-" airline configuration
-let g:bargreybars_auto=0
-let g:airline_solorized_bg='dark'
-let g:airline#extension#tabline#enable=1
-let g:airline#extension#tabline#left_sep=' '
-let g:airline#extension#tabline#left_alt_sep='|'
-let g:airline#extension#tabline#formatter='unique_tail'
-
-
 " ALE configuration
 let b:ale_fixers = ['prettier', 'eslint']
+
 
 " Terminal configuration
 let g:term_buf = 0
 let g:term_win = 0
+
+
