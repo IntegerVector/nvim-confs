@@ -1,4 +1,5 @@
 " General settings:
+" set noswapfile            " disable creating swap file
 set nocompatible            " disable compatibility to old-time vi
 set showmatch               " show matching 
 set ignorecase              " case insensitive 
@@ -19,10 +20,12 @@ set ttyfast                 " Speed up scrolling in Vim
 set spell                   " enable spell check
 set backupdir=~/.cache/vim  " Directory to store backup files.
 set fileformats=unix,dos,mac
+set splitright
+set splitbelow
+
 syntax on                   " syntax highlighting
 filetype plugin on
 filetype plugin indent on   " allow auto-indenting depending on file type
-" set noswapfile            " disable creating swap file
 
 
 " Navigation settings:
@@ -49,17 +52,13 @@ nnoremap ¬ <C-w>l
 
 
 " Terminal settings:
-set splitright
-set splitbelow
-
 tnoremap <Esc> <C-\><C-n>
-
 au BufEnter * if &buftype == 'terminal' | :startinsert | endif
 
 function! OpenTerminal()
-  split term://bash
-  resize 10
+  vsplit term://bash
 endfunction
+
 nnoremap <c-n> :call OpenTerminal()<CR>
 
 
@@ -69,6 +68,7 @@ call plug#begin("~/.vim/plugged")
     Plug 'https://github.com/preservim/nerdtree.git'
     Plug 'https://github.com/Xuyuanp/nerdtree-git-plugin.git'
     Plug 'https://github.com/ivalkeen/nerdtree-execute.git'
+    Plug 'unkiwii/vim-nerdtree-sync'
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
     Plug 'junegunn/fzf.vim'
     Plug 'https://github.com/APZelos/blamer.nvim.git'
@@ -83,15 +83,21 @@ call plug#end()
 colorscheme sonokai
 
 " NERD Tree configuration
-let g:NERDTreeWinSize=35
+let g:NERDTreeWinSize=40
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeMinimalUI = 1
 let g:NERDTreeIgnore = []
 let g:NERDTreeStatusline = ''
+let g:NERDTreeHighlightCursorline = 1
+let NERDTreeShowBookmarks=1
+
+let g:nerdtree_sync_cursorline = 1
 
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 nnoremap <silent> <C-b> :NERDTreeToggle<CR>
+
+autocmd VimEnter * NERDTree
 
 " ALE configuration
 let b:ale_fixers = ['prettier', 'eslint']
